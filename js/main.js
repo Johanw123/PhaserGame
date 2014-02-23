@@ -17,15 +17,15 @@ game_state.main.prototype = {
     preload: function() {
 
 
-        game.load.image('hello', '../assets/hello.png');
-
+        game.load.image('hello', 'assets/hello.png');
+    
         grid = new Grid(game);
 
 
     },
 
     create: function() {
-
+        this.game.stage.backgroundColor = '#FFFFFF';
         //game.add.existing(grid);
         grid.make();
 
