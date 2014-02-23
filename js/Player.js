@@ -2,7 +2,8 @@
 var cursors;
 var fireButton;
 
-Player = function (game, x, y) {
+Player = function (game, x, y)
+{
 
     Phaser.Sprite.call(this, game, x, y, 'hello');
     
