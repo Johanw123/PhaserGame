@@ -21,7 +21,6 @@ game_state.main.prototype = {
     
         grid = new Grid(game);
 
-
     },
 
     create: function() {
