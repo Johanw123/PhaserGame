@@ -23,6 +23,8 @@ var gridArray = [
     0, 0, 0
 ];
 
+var spriteArray;
+
 Grid.prototype.update = function()
 {
     //check for winner/loser/tie
@@ -46,46 +48,48 @@ Grid.prototype.render = function()
 Grid.prototype.make = function()
 {
     var item;
-
-
+    spriteArray = new Array();
+    var cellLength = 750/3;
+    var cellHeight = 600/3;
+    var cellLengthHalf = cellLength/2;
+    var cellHeightHalf = cellHeight/2;
 
     for (var i = 0; i < 3; i++)
     {
-        item = this.create(150 + 168 * i, 150, 'hello', i);
+        
+        item = this.create(cellLength * i, 0, 'hello2', i);
         // Enable input.
         item.input.start(0, true);
         item.mark = " ";
         item.arrayIndex = i;
         item.events.onInputDown.add(select);
         this.getAt(i).alpha = 0.25;
+        spriteArray[i] = item;
     }
 
     for (var i = 0; i < 3; i++)
     {
-        item = this.create(150 + 168 * i, 318, 'hello', i + 3);
+        item = this.create(cellLength * i, cellHeight, 'hello2', i + 3);
         // Enable input.
         item.input.start(0, true);
         item.mark = " ";
         item.arrayIndex = i + 3;
         item.events.onInputDown.add(select);
         this.getAt(i + 3).alpha = 0.25;
+        spriteArray[i + 3] = item;
     }
 
     for (var i = 0; i < 3; i++)
     {
-        item = this.create(150 + 168 * i, 518, 'hello', i + 6);
+        item = this.create(cellLength * i, cellHeight*2, 'hello2', i + 6);
         // Enable input.
         item.input.start(0, true);
         item.mark = " ";
         item.arrayIndex = i + 6;
         item.events.onInputDown.add(select);
         this.getAt(i + 6).alpha = 0.25;
+        spriteArray[i + 6] = item;
     }
-    var timer;
-    var txt = game.add.group();
-
-    timer = game.add.text(4, 48, 'Time: 0s', { fontSize: '32px', fill: 'white', stroke: "black", strokeThickness: 5});
-    txt.add(timer);
 
 };
 
@@ -95,7 +99,8 @@ function select(item, pointer)
     {
         item.alpha = 1;
         item.mark = "X";
+        item.loadTexture('X');
         gridArray[item.arrayIndex] = 1;
-        playerai.doMove(gridArray);
+        playerai.doMove(gridArray, spriteArray);
     }
 }
