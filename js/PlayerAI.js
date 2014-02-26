@@ -24,7 +24,7 @@ PlayerAI.prototype = {
     {
         for(var i = 0; i < 9; ++i)
         {
-            if(gridArray[i] == 0)
+            if(gridArray[i] === 0)
             {
                 gridArray[i] = 2;
                 spriteArray[i].alpha = 1;

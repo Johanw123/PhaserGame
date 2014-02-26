@@ -21,9 +21,11 @@ game_state.main.prototype = {
         game.load.image('hello2', 'assets/hello2.png');
         game.load.image('X', 'assets/X.png');
         game.load.image('O', 'assets/O.png');
-    
+        game.load.image('Win', 'assets/Win.png');
+        game.load.image('Lose', 'assets/Lose.png');
+        game.load.image('Draw', 'assets/Draw.png');
+        
         grid = new Grid(game);
-
     },
 
     create: function() {
@@ -36,16 +38,11 @@ game_state.main.prototype = {
     update: function() {
 
         grid.update();
-
     },
     render: function() {
 
 
         grid.render();
-    },
-    reset: function(){
-        grid = new Grid(game);
-        grid.make();
     },
     
 };
