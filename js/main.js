@@ -1,6 +1,6 @@
 // We start by initializing Phaser
 // Parameters: width of the game, height of the game, how to render the game, the HTML div that will contain the game
-var game = new Phaser.Game(750, 600, Phaser.CANVAS, 'phaser-example');
+var game = new Phaser.Game(750, 600, Phaser.AUTO, 'phaser-example');
 //var game = new Phaser.Game(320, 416, Phaser.CANVAS, "content",{ preload: preload, create: create, update: update, render: render });
 
 var grid;
@@ -38,11 +38,6 @@ game_state.main.prototype = {
     update: function() {
 
         grid.update();
-    },
-    render: function() {
-
-
-        grid.render();
     },
     
 };

@@ -38,20 +38,6 @@ Grid.prototype.update = function()
 
 };
 
-Grid.prototype.render = function()
-{
-
-    for(var i = 0; i < 9; ++i)
-    {
-        if(i < 3)
-            game.debug.renderText(gridArray[i], cellLengthHalf + cellLength * i, cellHeightHalf);
-        else if(i < 6)
-            game.debug.renderText(gridArray[i], cellLengthHalf + cellLength * (i - 3), cellHeight + cellHeightHalf);
-        else if(i < 9)
-            game.debug.renderText(gridArray[i], cellLengthHalf + cellLength * (i - 6), cellHeight + cellHeight + cellHeightHalf);
-    }
-};
-
 Grid.prototype.make = function()
 {
     var item;
@@ -75,7 +61,6 @@ Grid.prototype.make = function()
         
         item = this.create(x, y, 'hello2', i);
         item.input.start(0, true);
-        item.mark = " ";
         item.arrayIndex = i;
         item.events.onInputDown.add(select);
         this.getAt(i).alpha = 0.25;
@@ -92,7 +77,6 @@ function select(item, pointer)
     if(gridArray[item.arrayIndex] === 0)
     {
         item.alpha = 1;
-        item.mark = "X";
         item.loadTexture('X');
         gridArray[item.arrayIndex] = 1;
         checkWinningCondition();
@@ -108,31 +92,29 @@ function select(item, pointer)
 function checkWinningCondition()
 {
      //check for winner/loser/tie
-    var winner = 0;
-  
-    
+
     if(gridArray[0] == gridArray[1])
     {
         if(gridArray[1] == gridArray[2])
         {
-            //winner
-            winner = gridArray[0];
+           if(checkWinner(gridArray[0]))
+               return;
         }
     }
     if(gridArray[3] == gridArray[4])
     {
         if(gridArray[4] == gridArray[5])
         {
-            //winner
-            winner = gridArray[3];
+            if(checkWinner(gridArray[3]))
+               return;
         }
     }
     if(gridArray[6] == gridArray[7])
     {
         if(gridArray[7] == gridArray[8])
         {
-            //winner
-            winner = gridArray[6];
+           if(checkWinner(gridArray[6]))
+               return;
         }
     }
     
@@ -140,24 +122,24 @@ function checkWinningCondition()
     {
         if(gridArray[3] == gridArray[6])
         {
-            //winner
-            winner = gridArray[0];
+           if(checkWinner(gridArray[0]))
+               return;
         }
     }
     if(gridArray[1] == gridArray[4])
     {
         if(gridArray[4] == gridArray[7])
         {
-            //winner
-            winner = gridArray[1];
+            if(checkWinner(gridArray[1]))
+               return;
         }
     }
     if(gridArray[2] == gridArray[5])
     {
         if(gridArray[5] == gridArray[8])
         {
-            //winner
-            winner = gridArray[2];
+            if(checkWinner(gridArray[2]))
+               return;
         }
     }
     
@@ -166,19 +148,19 @@ function checkWinningCondition()
     {
         if(gridArray[4] == gridArray[8])
         {
-            //winner
-            winner = gridArray[0];
+            if(checkWinner(gridArray[0]))
+               return;
         }
     }
     if(gridArray[2] == gridArray[4])
     {
         if(gridArray[4] == gridArray[6])
         {
-            //winner
-            winner = gridArray[2];
+           if(checkWinner(gridArray[2]))
+               return;
         }
     }
-    
+
     var isDraw = true;
     //draw
     for (var i = 0; i < 9; i++)
@@ -190,33 +172,45 @@ function checkWinningCondition()
         }
     }
 
-    if(winner == 1)
-    {
-        gameOver = true;
-        overlaySprite = this.game.add.sprite(0, 0, 'Win');
-        overlaySprite.input.start(0, true);
-        overlaySprite.events.onInputDown.add(reset);
-    }
-    else if(winner == 2)
-    {
-        gameOver = true;
-        overlaySprite = this.game.add.sprite(0, 0, 'Lose');
-        overlaySprite.input.start(0, true);
-        overlaySprite.events.onInputDown.add(reset);
-    }
-    else if(isDraw)
+
+    if(isDraw)
     {
         gameOver = true;
         overlaySprite = this.game.add.sprite(0, 0, 'Draw');
         overlaySprite.input.start(0, true);
         overlaySprite.events.onInputDown.add(reset);
     }
+
+}
+
+function checkWinner(winner)
+{
+    if(winner == 1)
+    {
+        console.log("winner 1");
+        gameOver = true;
+        overlaySprite = this.game.add.sprite(0, 0, 'Win');
+        overlaySprite.input.start(0, true);
+        overlaySprite.events.onInputDown.add(reset);
+        return true;
+    }
+    else if(winner == 2)
+    {
+        console.log("winner 2");
+        gameOver = true;
+        overlaySprite = this.game.add.sprite(0, 0, 'Lose');
+        overlaySprite.input.start(0, true);
+        overlaySprite.events.onInputDown.add(reset);
+        return true;
+    }
+    return false;
 }
 
 function reset()
 {
     for (var i = 0; i < 9; i++) {
         spriteArray[i].loadTexture('hello2');
+        spriteArray[i].alpha = 0.25;
     }
     for (var i = 0; i < 9; i++) {
         gridArray[i] = 0;
